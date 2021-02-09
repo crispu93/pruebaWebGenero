@@ -1,0 +1,32 @@
+{
+    "users": [{"personal": {
+        "nombre": "Jesus",
+        "paterno": "Alvarado",
+        "materno": "Cano",
+        "edad": 12,
+        "matricula": 1052068,
+        "genero": "Femenino"
+    },
+    "inf_univ": {
+        "vinculacion": "Estudiante",
+        "programa_puesto": "Lic. Mate",
+        "contrato": null,
+        "tipo_contrato": null
+    },
+    "contacto": {
+        "correo": "pepe@gmail.com",
+        "telefono": 6182121211
+    },
+    "descripcion_agresion": {
+        "tipo": "verbal",
+        "presunto": "Assembling Kills",
+        "relacion": "profesor",
+        "lugar": "Facultad",
+        "fecha": "2014-01-01T23:28:56.782Z",
+        "testigo_1": "Adri",
+        "testigo_2": "Oscar",
+        "testigo_3": "Riqui",
+        "descripcion": "El compa se altero y perdió el control"
+    }
+    }]
+}
