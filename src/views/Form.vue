@@ -100,14 +100,15 @@
                     </b-form-row>
                 <b-form-row>
                     <b-col cols="12" md="6">
-                    <label for="tipo_contrato">En caso de ser dependiente de la UJED elija el tipo de contrato:</label>
-                    <b-form-select id="tipo_contrato" v-model="user.inf_univ.contrato" :options="opciones3"></b-form-select>
+                    <label for="tip_contrato">En caso de ser dependiente de la UJED elija el tipo de contrato:</label>
+                    <b-form-select id="tip_contrato" v-model="user.inf_univ.contrato" :options="opciones3"></b-form-select>
                     </b-col>
                     <b-col cols="12" md="6">
                     <label for="docente" v-if="user.inf_univ.contrato === 'Docente'">Elige el tipo de contrato docente:</label>
-                    <b-form-select id="docente" v-model="user.inf_univ.contrato.tipo_contrato" :options="opciones4" v-if="user.inf_univ.contrato === 'Docente'"></b-form-select>
+                    <b-form-select id="docente" v-model="user.inf_univ.tipo_contrato" :options="opciones4" v-if="user.inf_univ.contrato === 'Docente'"></b-form-select>
+
                     <label for="op_contrato" v-if="user.inf_univ.contrato === 'Contrato'">Elige el tipo de contrato:</label>
-                    <b-form-select id="op_contrato" v-model="user.inf_univ.contrato.tipo_contrato" :options="opciones5" v-if="user.inf_univ.contrato === 'Contrato'"></b-form-select>
+                    <b-form-select id="op_contrato" v-model="user.inf_univ.tipo_contrato" :options="opciones5" v-if="user.inf_univ.contrato === 'Contrato'"></b-form-select>
                     </b-col>
                     </b-form-row>
                     <h3>Datos de contacto</h3>
@@ -240,7 +241,7 @@ export default {
         { value: 'Docente', text: 'Docente' },
         { value: 'Funcionario', text: 'Funcionario(a)' }
       ],
-      tipo_contrato: null,
+      tip_contrato: null,
       opciones3: [
         { value: null, text: '-Selecciona una opción-' },
         { value: 'Docente', text: 'Docente' },
@@ -274,7 +275,8 @@ export default {
                 'vinculacion': '',
                 'programa_puesto': '',
                 'contrato': '',
-                'tipo_contrato': ''
+                'tipo_contrato': '',
+                'tipo_contrato2': ''
             },
             'contacto': {
                 'correo': '',
@@ -400,11 +402,20 @@ export default {
                                 [{ text: 'Datos personales de la persona afectada', style: 'tableHeader', colSpan: 3},{},{}],
                                 [{ text: 'Nombre: ' + ' ' + this.user.personal.nombre + ' ' + this.user.personal.paterno + ' ' + this.user.personal.materno }, { text: 'Edad: ' + this.user.personal.edad}, { text: 'Matrícula: ' + this.user.personal.matricula }],
                                 [{ text: 'Género: ' + ' ' + this.user.personal.genero}, { text: 'Vinculación con la universidad: ' + ' ' + this.user.inf_univ.vinculacion, colSpan: 2}, {}],
-                                [{ text: 'Programa de estudios al que pertenece (en caso de ser estudiante): ' + ' ' + ((this.user.inf_univ.vinculacion === 'Estudiante') ? this.user.inf_univ.programa_puesto : 'N/A'), colSpan: 3},{},{}]
-                                [{ text: 'Puesto que desempeña (en caso de ser funcionario): ' + ' ' + ((this.user.inf_univ.vinculacion === 'Funcionario') ? this.user.inf_univ.programa_puesto : 'N/A'), colSpan: 3},{},{}]
-                                // [{text: 'Tipo de contrato : ' + (this.user.inf_univ.contrato === undefined ? 'N/A' : this.user.inf_univ.contrato) },{ text: 'Contrato (Docente) : ' + ((this.user.inf_univ.contrato !== undefined && this.user.inf_univ.contrato === 'Docente') ? this.user.inf_univ.tipo_contrato : 'N/A'), colSpan: 2},{}]
-                                // [{ text: 'Contrato (Administrativo) : ' + (this.user.inf_univ.contrato === 'Administrativo') ? this.user.inf_univ.tipo_contrato : 'N/A', colSpan: 2},{},{text: 'Otro tipo de contrato : ' + (this.user.inf_univ.contrato === 'Otro') ? this.user.inf_univ.tipo_contrato : 'N/A'}]
-                            
+                                [{ text: 'Programa de estudios al que pertenece (en caso de ser estudiante): ' + ' ' + ((this.user.inf_univ.vinculacion === 'Estudiante') ? this.user.inf_univ.programa_puesto : 'N/A'), colSpan: 3},{},{}],
+                                [{ text: 'Puesto que desempeña (en caso de ser funcionario): ' + ' ' + ((this.user.inf_univ.vinculacion === 'Funcionario') ? this.user.inf_univ.programa_puesto : 'N/A'), colSpan: 3},{},{}],
+                                [{text: 'Tipo de contrato : ' + (this.user.inf_univ.contrato === undefined || this.user.inf_univ.contrato === '' ? 'N/A' : this.user.inf_univ.contrato)}, { text: 'Contrato (Docente) : ' + ((this.user.inf_univ.contrato === 'Docente') ? this.user.inf_univ.tipo_contrato : 'N/A') , colSpan: 2},{}],
+                                [{ text: 'Datos de contacto', style: 'tableHeader', colSpan: 3},{},{}],
+                                [{ text: 'Correo electrónico: ' + this.user.contacto.correo, colSpan: 2},{},{text: 'Teléfono: ' + this.user.contacto.telefono}],
+                                [{ text: 'Violencia de género', style: 'tableHeader', colSpan: 3},{},{}],
+                                [{ text: 'Tipificación tentativa de la violencia: ' + this.user.descripcion_agresion.tipo , colSpan: 3},{},{}],
+                                [{ text: 'Nombre de la persona presunta infractora: ' + this.user.descripcion_agresion.presunto , colSpan: 3},{},{}],
+                                [{ text: 'Relación laboral de la persona presunta infractora con la persona afectada: ' + this.user.descripcion_agresion.relacion , colSpan: 3},{},{}],
+                                [{ text: 'Lugar de los hechos: ' + this.user.descripcion_agresion.lugar , colSpan: 2},{},{text: 'Fecha: ' + this.user.descripcion_agresion.fecha}],
+                                [{ text: 'Testigo 1: ' + ((this.user.descripcion_agresion.testigo_1 === undefined || this.user.descripcion_agresion.testigo_1 === '')? 'N/A': this.user.descripcion_agresion.testigo_1) }, {text: 'Testigo 2: ' + ((this.user.descripcion_agresion.testigo_2 === undefined || this.user.descripcion_agresion.testigo_2 === '')? 'N/A': this.user.descripcion_agresion.testigo_2) }, {text: 'Testigo 3: ' + ((this.user.descripcion_agresion.testigo_3 === undefined || this.user.descripcion_agresion.testigo_3 === '') ? 'N/A': this.user.descripcion_agresion.testigo_3) } ],
+                                [{ text: 'Descripción de los hechos ', style: 'tableHeader', colSpan: 3},{},{}],
+                                [{ text: this.user.descripcion_agresion.descripcion , colSpan: 3},{},{}]
+
                                 ]
                         }
                     }
